@@ -1,19 +1,22 @@
-
 import mongoose from 'mongoose';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// Configurar strictQuery para evitar warnings
+mongoose.set('strictQuery', false);
 
 const connectionDb = async () => {
-  console.log(connectionDb);
   try {
-    const connection = await mongoose.connect(process.env.MONGO_URI, {
+    const connection = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
-    
+
     const url = `${connection.connection.host}:${connection.connection.port}`;
-    console.log(`MongoDB conecting from: ${url}`);
+    console.log(`✅ MongoDB conectado desde: ${url}`);
   } catch (error) {
-    console.log(`Error: ${error.message}`);
+    console.error(`❌ Error conectando a MongoDB: ${error.message}`);
     process.exit(1);
   }
 };
